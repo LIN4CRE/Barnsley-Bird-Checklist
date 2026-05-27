@@ -129,7 +129,20 @@
 
     .bird-card.seen { border-color: var(--accent); }
 
-    .card-img { height: 200px; width: 100%; object-fit: cover; background: #eee; }
+    .card-img-container { position: relative; height: 200px; width: 100%; overflow: hidden; background: #eee; }
+    .card-img { height: 100%; width: 100%; object-fit: cover; transition: opacity 0.3s; }
+    .user-photo { position: absolute; inset: 0; z-index: 2; border-bottom: 2px solid var(--accent); }
+    
+    .photo-actions {
+      position: absolute; bottom: 8px; right: 8px; z-index: 3;
+      display: flex; gap: 8px;
+    }
+
+    .photo-btn {
+      background: rgba(255,255,255,0.9); border: none; width: 40px; height: 40px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
 
     .card-content { padding: 16px; }
 
@@ -439,7 +452,18 @@
 
       return `
         <article class="bird-card ${seenClass}" id="card-${escapeHTML(b.id)}">
-          <img src="${escapeHTML(b.img)}" class="card-img" alt="${escapeHTML(b.name)}" loading="lazy">
+          <div class="card-img-container">
+            <img src="${escapeHTML(b.img)}" class="card-img" alt="${escapeHTML(b.name)}" loading="lazy">
+            ${state.photo ? `<img src="${escapeHTML(state.photo)}" class="user-photo" alt="Your photo of ${escapeHTML(b.name)}">` : ''}
+            
+            <div class="photo-actions">
+              <label class="photo-btn" title="Add My Photo">
+                📷
+                <input type="file" accept="image/*" class="hidden" onchange="handlePhotoUpload(this, '${escapeHTML(b.id)}')">
+              </label>
+              ${state.photo ? `<button class="photo-btn" style="color:var(--danger)" onclick="removePhoto('${escapeHTML(b.id)}')" title="Remove Photo">🗑️</button>` : ''}
+            </div>
+          </div>
           <div class="card-content">
             <h3 class="card-title">${escapeHTML(b.name)}</h3>
             <p class="card-desc">${escapeHTML(b.desc)}</p>

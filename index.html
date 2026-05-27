@@ -472,8 +472,34 @@
 
     function toggleSeen(id) {
       const state = getBirdState(id);
-      setBirdState(id, { seen: !state.seen });
+      const nowSeen = !state.seen;
+      
+      setBirdState(id, { seen: nowSeen });
+      
+      if (nowSeen) {
+        // Haptic feedback for "that felt good"
+        if (navigator.vibrate) navigator.vibrate(50);
+        
+        // Celebrate!
+        celebrate();
+      }
+      
       render();
+    }
+
+    function celebrate() {
+      const colors = ['#2d6a4f', '#52b788', '#d8f3dc', '#f39c12'];
+      for (let i = 0; i < 30; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        c.style.width = (Math.random() * 10 + 5) + 'px';
+        c.style.height = c.style.width;
+        c.style.animationDelay = (Math.random() * 2) + 's';
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 4000);
+      }
     }
 
     /* ============================================

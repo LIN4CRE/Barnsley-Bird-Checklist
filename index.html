@@ -4,27 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>Barnsley Bird Checklist</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2d6a4f">
   <style>
     /* ============================================
-       BARNSELEY BIRD CHECKLIST — SINGLE FILE APP
-       Designed for elderly & beginner users
-       Mobile-first, offline-ready, high contrast
+       BARNSLEY BIRD CHECKLIST — MUM FRIENDLY VERSION
        ============================================ */
 
     :root {
-      --bg: #f4f7f4;
+      --bg: #fdfefd;
       --card: #ffffff;
-      --text: #1a1a1a;
-      --muted: #555555;
+      --text: #1b2e22;
+      --muted: #5c7161;
       --accent: #2d6a4f;
       --accent-light: #d8f3dc;
-      --border: #b7e4c7;
-      --shadow: rgba(0,0,0,0.08);
-      --danger: #c0392b;
-      --warning: #e67e22;
-      --rare: #8e44ad;
-      --font: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-      --radius: 18px;
+      --border: #e0eadd;
+      --shadow: rgba(0,0,0,0.06);
+      --danger: #d94e33;
+      --warning: #f39c12;
+      --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      --radius: 20px;
       --radius-sm: 12px;
     }
 
@@ -37,503 +36,203 @@
       --accent-light: #1b4332;
       --border: #2d6a4f;
       --shadow: rgba(0,0,0,0.3);
-      --danger: #e74c3c;
-      --warning: #f39c12;
-      --rare: #bb8fce;
     }
 
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
     html { scroll-behavior: smooth; font-size: 18px; }
 
     body {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       background: var(--bg);
       color: var(--text);
       font-family: var(--font);
       line-height: 1.5;
-      transition: background 0.3s, color 0.3s;
     }
 
-    /* Header */
+    /* Modern Header */
     header {
-      background: linear-gradient(180deg, #1b4332 0%, #2d6a4f 100%);
-      color: #fff;
-      padding: 24px 16px 18px;
+      background: var(--card);
+      padding: 20px 16px;
       text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      position: sticky; top: 0; z-index: 100;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 10px var(--shadow);
     }
 
     header h1 {
-      margin: 0 0 8px;
-      font-size: 1.8rem;
-      letter-spacing: 0.5px;
+      margin: 0; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 8px;
     }
 
-    header p {
-      margin: 0 0 14px;
-      font-size: 1.05rem;
-      opacity: 0.95;
+    .settings-trigger {
+      position: absolute; right: 16px; top: 20px;
+      background: none; border: none; font-size: 1.4rem; cursor: pointer; padding: 4px;
     }
 
-    /* Progress bar */
-    .progress-wrap {
-      background: rgba(255,255,255,0.25);
-      border-radius: 100px;
-      height: 32px;
-      overflow: hidden;
-      margin: 0 auto 12px;
-      max-width: 480px;
-      position: relative;
+    /* Progress & Share */
+    .top-actions {
+      max-width: 600px; margin: 16px auto; padding: 0 16px;
+      display: flex; flex-direction: column; gap: 12px;
     }
 
-    .progress-bar {
-      height: 100%;
-      background: #d8f3dc;
-      color: #1b4332;
-      font-weight: bold;
-      font-size: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 100px;
-      transition: width 0.5s ease;
-      white-space: nowrap;
-      min-width: 44px;
-    }
-
-    /* Sticky controls */
-    .controls {
-      position: sticky;
-      top: 130px; /* approximate header height */
-      z-index: 90;
-      background: var(--bg);
-      padding: 12px 14px 14px;
-      border-bottom: 2px solid var(--border);
-      transition: background 0.3s;
-    }
-
-    .search-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
-    }
-
-    .search-row input,
-    .search-row select {
-      font-size: 1.15rem;
-      padding: 14px 16px;
-      border: 2px solid var(--border);
-      border-radius: var(--radius-sm);
-      background: var(--card);
-      color: var(--text);
-      flex: 1 1 140px;
-      min-height: 52px;
-      font-family: inherit;
-    }
-
-    .search-row input:focus,
-    .search-row select:focus {
-      outline: 3px solid #40916c;
-      outline-offset: 2px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-size: 1.15rem;
-      font-weight: 600;
-      padding: 16px 20px;
-      border: none;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      min-height: 56px;
-      min-width: 56px;
-      font-family: inherit;
-      transition: transform 0.1s, box-shadow 0.2s;
-      line-height: 1.2;
-    }
-
-    .btn:active { transform: scale(0.98); }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-      box-shadow: 0 4px 0 #1b4332;
-    }
-
-    .btn-secondary {
-      background: var(--card);
-      color: var(--text);
-      border: 2px solid var(--border);
-      box-shadow: 0 3px 0 var(--border);
-    }
-
-    .btn-danger {
-      background: var(--danger);
-      color: #fff;
-      box-shadow: 0 4px 0 #922b21;
-    }
-
-    .btn-toggle {
-      background: var(--warning);
-      color: #fff;
-      box-shadow: 0 4px 0 #a04000;
-    }
-
-    .filter-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .toggle-btn {
-      flex: 1 1 auto;
-      min-width: 120px;
-    }
-
-    /* Main content */
-    main { padding: 8px 14px 40px; max-width: 900px; margin: 0 auto; }
-
-    /* Spotlight */
-    .spotlight {
-      background: linear-gradient(135deg, var(--accent-light), var(--bg));
-      border: 2px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px;
-      margin: 18px 0 22px;
-      text-align: center;
-    }
-
-    .spotlight h2 { margin: 0 0 10px; font-size: 1.4rem; color: var(--accent); }
-
-    .spotlight img {
-      width: 220px;
-      height: 220px;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 4px solid var(--border);
-      display: block;
-      margin: 0 auto 12px;
-      background: var(--card);
-    }
-
-    .spotlight .bird-name { font-size: 1.4rem; font-weight: bold; margin-bottom: 6px; }
-
-    /* Stats */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 12px;
-      margin: 18px 0 24px;
-    }
-
-    .stat-box {
-      background: var(--card);
-      border: 2px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 16px;
-      text-align: center;
-      box-shadow: 0 2px 8px var(--shadow);
-    }
-
-    .stat-number { font-size: 2rem; font-weight: bold; color: var(--accent); display: block; }
-
-    .stat-label { font-size: 0.95rem; color: var(--muted); }
-
-    /* Section headings */
-    .category-title {
-      font-size: 1.5rem;
-      margin: 28px 0 14px;
-      padding: 12px 14px;
-      background: var(--accent);
-      color: #fff;
-      border-radius: var(--radius-sm);
-      text-align: center;
-      box-shadow: 0 4px 0 #1b4332;
-    }
-
-    /* Cards grid */
-    .cards-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
-    }
-
-    @media (min-width: 640px) {
-      .cards-grid { grid-template-columns: 1fr 1fr; }
-      header h1 { font-size: 2.2rem; }
-    }
-
-    @media (min-width: 960px) {
-      .cards-grid { grid-template-columns: 1fr 1fr 1fr; }
-    }
-
-    /* Bird Card */
-    .bird-card {
-      background: var(--card);
-      border: 2px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: 0 4px 12px var(--shadow);
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .bird-card:focus-within {
-      outline: 3px solid var(--accent);
-      outline-offset: 2px;
-    }
-
-    .bird-card.seen { border-color: var(--accent); box-shadow: 0 4px 16px rgba(45,106,79,0.15); }
-
-    .card-image-wrap {
-      width: 100%;
-      height: 220px;
-      background: #e8f5e9;
-      position: relative;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-
-    .card-image-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .card-image-wrap .img-fallback {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-      font-weight: bold;
-      color: #a7c957;
-      background: #e8f5e9;
-    }
-
-    .card-body { padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
-
-    .card-title {
-      margin: 0;
-      font-size: 1.35rem;
-      text-align: center;
-    }
-
-    .card-desc {
-      margin: 0;
-      font-size: 1rem;
-      color: var(--muted);
-      text-align: center;
-      min-height: 3rem;
-    }
-
-    .seen-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
+    .progress-container {
       background: var(--accent-light);
-      border-radius: var(--radius-sm);
-      padding: 14px;
-      cursor: pointer;
-      user-select: none;
-      border: 2px solid transparent;
-      transition: border-color 0.2s;
+      height: 36px; border-radius: 100px; overflow: hidden;
+      position: relative; display: flex; align-items: center; justify-content: center;
     }
 
-    .seen-row:focus-within { border-color: var(--accent); }
-
-    .seen-row input[type="checkbox"] {
-      width: 36px;
-      height: 36px;
-      min-width: 36px;
-      min-height: 36px;
-      cursor: pointer;
-      accent-color: var(--accent);
+    .progress-fill {
+      position: absolute; left: 0; top: 0; height: 100%;
+      background: var(--accent); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1;
     }
 
-    .seen-label {
-      font-size: 1.25rem;
-      font-weight: bold;
-      cursor: pointer;
+    .progress-text {
+      position: relative; z-index: 2; font-weight: 700; color: var(--text); font-size: 0.9rem;
     }
 
-    .field-group { display: flex; flex-direction: column; gap: 4px; }
-
-    .field-group label {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--muted);
-      padding-left: 2px;
+    .share-btn {
+      background: var(--accent); color: white; border: none;
+      padding: 12px; border-radius: var(--radius-sm); font-weight: 700;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      font-size: 1rem; cursor: pointer; box-shadow: 0 4px 12px rgba(45,106,79,0.2);
     }
 
-    .field-group input[type="date"],
-    .field-group textarea {
-      font-size: 1.1rem;
-      padding: 12px;
-      border: 2px solid var(--border);
-      border-radius: 10px;
-      font-family: inherit;
-      background: var(--card);
-      color: var(--text);
-      min-height: 52px;
+    /* Main Search & Filters */
+    .sticky-controls {
+      position: sticky; top: 80px; z-index: 90;
+      background: var(--bg); padding: 12px 16px;
+      display: flex; gap: 8px; border-bottom: 1px solid var(--border);
     }
 
-    .field-group textarea {
-      resize: vertical;
-      min-height: 80px;
+    .search-input {
+      flex: 1; padding: 12px 16px; border-radius: var(--radius-sm);
+      border: 2px solid var(--border); font-size: 1rem; font-family: inherit;
     }
 
-    .field-group input:focus,
-    .field-group textarea:focus {
-      outline: 3px solid #40916c;
-      outline-offset: 2px;
+    .filter-select {
+      width: 120px; padding: 12px; border-radius: var(--radius-sm);
+      border: 2px solid var(--border); background: var(--card); font-family: inherit;
     }
 
-    .user-photo-wrap {
-      margin-top: 6px;
+    /* Grid & Cards */
+    main { padding: 16px; max-width: 1000px; margin: 0 auto; }
+
+    .cards-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;
     }
 
-    .user-photo-wrap img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 12px;
-      display: block;
-      border: 2px dashed var(--border);
+    .bird-card {
+      background: var(--card); border-radius: var(--radius); overflow: hidden;
+      box-shadow: 0 4px 15px var(--shadow); border: 2px solid transparent;
+      transition: transform 0.2s, border-color 0.2s;
     }
 
-    .photo-btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .bird-card.seen { border-color: var(--accent); }
 
-    .file-input { display: none; }
+    .card-img { height: 200px; width: 100%; object-fit: cover; background: #eee; }
 
-    .empty-state {
-      text-align: center;
-      padding: 40px 20px;
-      font-size: 1.2rem;
-      color: var(--muted);
+    .card-content { padding: 16px; }
+
+    .card-title { margin: 0 0 8px; font-size: 1.25rem; }
+
+    .card-desc { font-size: 0.9rem; color: var(--muted); margin-bottom: 16px; line-height: 1.4; }
+
+    .seen-toggle {
+      width: 100%; padding: 12px; border-radius: var(--radius-sm);
+      border: 2px solid var(--accent-light); background: var(--accent-light);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      font-weight: 700; cursor: pointer; transition: all 0.2s;
     }
 
-    /* Scroll to top */
-    #scrollTopBtn {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      z-index: 80;
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      display: none;
-      font-size: 1.6rem;
-      padding: 0;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    .seen-toggle.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+    /* Settings Modal */
+    .modal {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+      display: none; align-items: flex-end; justify-content: center; z-index: 1000;
     }
 
-    /* Footer actions */
-    .actions-bar {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin: 24px 0 8px;
+    .modal-content {
+      background: var(--card); width: 100%; max-width: 500px;
+      padding: 24px; border-radius: 24px 24px 0 0;
+      box-shadow: 0 -10px 25px rgba(0,0,0,0.1);
     }
 
-    /* Utility */
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0,0,0,0);
-      border: 0;
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+
+    .modal-title { margin: 0; font-size: 1.4rem; }
+
+    .close-modal { background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+
+    .settings-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+
+    .settings-item {
+      display: flex; align-items: center; gap: 12px; width: 100%; padding: 14px;
+      border-radius: var(--radius-sm); border: 1px solid var(--border);
+      background: var(--card); cursor: pointer; font-size: 1rem; font-weight: 600;
     }
 
+    /* Utilities */
     .hidden { display: none !important; }
+    #scrollTopBtn {
+      position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px;
+      border-radius: 50%; background: var(--accent); color: white; border: none;
+      display: none; align-items: center; justify-content: center; font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 99;
+    }
   </style>
-</head>
-<body>
+  </head>
+  <body>
   <header>
-    <h1>🐦 Barnsley Bird Checklist</h1>
-    <p>Birdwatching around S70, South Yorkshire</p>
-    <div class="progress-wrap" aria-label="Progress">
-      <div class="progress-bar" id="progressBar" style="width:0%">0 of 0</div>
-    </div>
-    <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
-      <button class="btn btn-secondary" id="themeBtn" onclick="toggleTheme()">🌙 Dark Mode</button>
-      <button class="btn btn-secondary" onclick="randomSpotlight()">✨ Bird Spotlight</button>
-    </div>
+    <h1>🐦 Barnsley Birds</h1>
+    <button class="settings-trigger" onclick="toggleModal(true)" aria-label="Settings">⚙️</button>
   </header>
 
-  <div class="controls">
-    <div class="search-row">
-      <input type="text" id="searchInput" placeholder="🔍 Search birds…" aria-label="Search birds" oninput="render()">
-      <select id="rarityFilter" aria-label="Filter by rarity" onchange="render()">
-        <option value="all">All Rarities</option>
-        <option value="Very Common">Very Common</option>
-        <option value="Common">Common</option>
-        <option value="Uncommon">Uncommon</option>
-        <option value="Rare">Rare</option>
-        <option value="Very Rare">Very Rare</option>
-      </select>
+  <div class="top-actions">
+    <div class="progress-container">
+      <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      <span class="progress-text" id="progressText">0 of 0 Birds Found</span>
     </div>
-    <div class="filter-row">
-      <button class="btn btn-toggle toggle-btn" id="seenToggle" onclick="toggleSeenOnly()">Show Only Seen</button>
-      <button class="btn btn-danger" onclick="markAllUnseen()">Mark All Unseen</button>
-    </div>
+    <button class="share-btn" onclick="shareProgress()">
+      📤 Share My Progress
+    </button>
+  </div>
+
+  <div class="sticky-controls">
+    <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search birds..." oninput="render()">
+    <select id="rarityFilter" class="filter-select" onchange="render()">
+      <option value="all">All</option>
+      <option value="Very Common">Common</option>
+      <option value="Uncommon">Uncommon</option>
+      <option value="Rare">Rare</option>
+    </select>
   </div>
 
   <main>
-    <!-- Spotlight -->
-    <section class="spotlight" id="spotlight" aria-live="polite">
-      <h2>✨ Bird Spotlight</h2>
-      <img id="spotlightImg" src="" alt="" style="display:none">
-      <div class="bird-name" id="spotlightName">-</div>
-      <div id="spotlightDesc">-</div>
-      <button class="btn btn-primary" style="margin-top:10px;" onclick="randomSpotlight()">Show Another Bird</button>
-    </section>
-
-    <!-- Statistics -->
-    <section aria-label="Statistics">
-      <h2 style="text-align:center; margin-top:10px;">Your Statistics</h2>
-      <div class="stats-grid" id="statsGrid">
-        <div class="stat-box"><span class="stat-number" id="statTotal">0</span><span class="stat-label">Total Birds</span></div>
-        <div class="stat-box"><span class="stat-number" id="statSeen">0</span><span class="stat-label">Seen</span></div>
-        <div class="stat-box"><span class="stat-number" id="statPercent">0%</span><span class="stat-label">Progress</span></div>
-        <div class="stat-box"><span class="stat-number" id="statWithPhoto">0</span><span class="stat-label">With Your Photo</span></div>
-      </div>
-    </section>
-
-    <!-- Import / Export -->
-    <section style="margin-bottom:20px;">
-      <div class="actions-bar">
-        <button class="btn btn-secondary" onclick="exportData()">📤 Export Data</button>
-        <label class="btn btn-secondary" style="cursor:pointer;">
-          📥 Import Data
-          <input type="file" class="file-input" accept=".json" onchange="importData(this)">
-        </label>
-      </div>
-    </section>
-
-    <!-- Bird Sections -->
-    <div id="birdSections"></div>
+    <div id="birdSections" class="cards-grid"></div>
   </main>
 
-  <button class="btn btn-primary" id="scrollTopBtn" onclick="scrollToTop()" aria-label="Scroll to top">⬆️</button>
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="modal" onclick="if(event.target==this) toggleModal(false)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Settings</h2>
+        <button class="close-modal" onclick="toggleModal(false)">✕</button>
+      </div>
+      <div class="settings-list">
+        <button class="settings-item" onclick="toggleTheme()">🌓 Change Light/Dark Mode</button>
+        <button class="settings-item" onclick="toggleSeenOnly()" id="seenToggleBtn">👁️ Show Only Seen Birds</button>
+        <button class="settings-item" onclick="exportData()">📤 Save My Data (Export)</button>
+        <label class="settings-item" style="cursor:pointer">
+          📥 Load My Data (Import)
+          <input type="file" class="hidden" accept=".json" onchange="importData(this)">
+        </label>
+        <button class="settings-item" style="color:var(--danger); border-color:var(--danger)" onclick="markAllUnseen()">🗑️ Reset Everything</button>
+      </div>
+    </div>
+  </div>
+
+  <button id="scrollTopBtn" onclick="scrollToTop()">↑</button>
 
   <script>
     /* ============================================
@@ -736,51 +435,17 @@
     function createCard(b) {
       const state = getBirdState(b.id);
       const seenClass = state.seen ? 'seen' : '';
-      const photoHtml = state.photo
-        ? `<img src="${escapeHTML(state.photo)}" alt="Your photo of ${escapeHTML(b.name)}" loading="lazy" onerror="this.style.display='none'">`
-        : `<div class="img-fallback" aria-hidden="true">${escapeHTML(b.name[0]||'?')}</div>`;
+      const activeClass = state.seen ? 'active' : '';
 
       return `
-        <article class="bird-card ${seenClass}" id="card-${escapeHTML(b.id)}" tabindex="0">
-          <div class="card-image-wrap">
-            <img src="${escapeHTML(b.img)}" alt="${escapeHTML(b.name)}" loading="lazy"
-              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="img-fallback" style="display:none" aria-hidden="true">${escapeHTML(b.name[0]||'?')}</div>
-          </div>
-          <div class="card-body">
+        <article class="bird-card ${seenClass}" id="card-${escapeHTML(b.id)}">
+          <img src="${escapeHTML(b.img)}" class="card-img" alt="${escapeHTML(b.name)}" loading="lazy">
+          <div class="card-content">
             <h3 class="card-title">${escapeHTML(b.name)}</h3>
             <p class="card-desc">${escapeHTML(b.desc)}</p>
-
-            <label class="seen-row" for="chk-${escapeHTML(b.id)}">
-              <input type="checkbox" id="chk-${escapeHTML(b.id)}" ${state.seen ? 'checked' : ''}
-                onchange="setBirdState('${escapeHTML(b.id)}', {seen:this.checked})" aria-label="Seen ${escapeHTML(b.name)}">
-              <span class="seen-label">${state.seen ? '✅ Seen' : '⬜ Not Seen'}</span>
-            </label>
-
-            <div class="field-group">
-              <label for="date-${escapeHTML(b.id)}">Date Seen</label>
-              <input type="date" id="date-${escapeHTML(b.id)}" value="${escapeHTML(state.date)}"
-                onchange="setBirdState('${escapeHTML(b.id)}', {date:this.value})">
-            </div>
-
-            <div class="field-group">
-              <label for="notes-${escapeHTML(b.id)}">Notes</label>
-              <textarea id="notes-${escapeHTML(b.id)}" rows="2" maxlength="500" placeholder="Where did you see it?"
-                onchange="setBirdState('${escapeHTML(b.id)}', {notes:this.value})">${escapeHTML(state.notes)}</textarea>
-            </div>
-
-            <div class="user-photo-wrap" id="uphoto-${escapeHTML(b.id)}">
-              ${photoHtml}
-            </div>
-
-            <div class="photo-btn-row">
-              <label class="btn btn-secondary" style="flex:1; cursor:pointer;">
-                📷 Add My Photo
-                <input type="file" accept="image/*" class="file-input"
-                  onchange="handlePhotoUpload(this, '${escapeHTML(b.id)}')">
-              </label>
-              ${state.photo ? `<button class="btn btn-danger" style="min-width:auto; padding:16px;" onclick="removePhoto('${escapeHTML(b.id)}')" aria-label="Remove photo">🗑️</button>` : ''}
-            </div>
+            <button class="seen-toggle ${activeClass}" onclick="toggleSeen('${escapeHTML(b.id)}')">
+              ${state.seen ? '✅ Spotted!' : '⬜ Not Seen Yet'}
+            </button>
           </div>
         </article>
       `;
@@ -791,112 +456,95 @@
       const rarity = document.getElementById('rarityFilter').value;
       const container = document.getElementById('birdSections');
 
-      let html = '';
-      let totalVisible = 0;
+      let visibleBirds = birds;
+      if (rarity !== 'all') visibleBirds = visibleBirds.filter(b => b.rarity === rarity);
+      if (q) visibleBirds = visibleBirds.filter(b => b.name.toLowerCase().includes(q) || b.desc.toLowerCase().includes(q));
+      if (showOnlySeen) visibleBirds = visibleBirds.filter(b => getBirdState(b.id).seen);
 
-      categories.forEach(cat => {
-        let catBirds = birds.filter(b => b.rarity === cat);
-        if (rarity !== 'all') catBirds = catBirds.filter(b => b.rarity === rarity);
-        if (q) catBirds = catBirds.filter(b => b.name.toLowerCase().includes(q) || b.desc.toLowerCase().includes(q));
-        if (showOnlySeen) catBirds = catBirds.filter(b => getBirdState(b.id).seen);
-
-        if (catBirds.length === 0) return;
-        totalVisible += catBirds.length;
-
-        html += `<section aria-label="${escapeHTML(cat)} birds"><h2 class="category-title">${escapeHTML(cat)}</h2><div class="cards-grid">`;
-        catBirds.forEach(b => { html += createCard(b); });
-        html += '</div></section>';
-      });
-
-      if (totalVisible === 0) {
-        html = `<div class="empty-state">No birds match your search.<br>Try a different word or filter.</div>`;
+      if (visibleBirds.length === 0) {
+        container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 40px; color: var(--muted)">No birds found. Try searching for something else!</div>`;
+      } else {
+        container.innerHTML = visibleBirds.map(b => createCard(b)).join('');
       }
 
-      container.innerHTML = html;
       updateProgress();
-      updateStats();
     }
 
-    function updateCardSeenVisuals(id, seen) {
-      const card = document.getElementById('card-' + id);
-      if (!card) return;
-      card.classList.toggle('seen', !!seen);
-      const label = card.querySelector('.seen-label');
-      if (label) label.textContent = seen ? '✅ Seen' : '⬜ Not Seen';
+    function toggleSeen(id) {
+      const state = getBirdState(id);
+      setBirdState(id, { seen: !state.seen });
+      render();
     }
 
     /* ============================================
-       PROGRESS, STATS, SPOTLIGHT
+       PROGRESS & SHARING
        ============================================ */
 
     function updateProgress() {
       const total = birds.length;
       let seen = 0;
       birds.forEach(b => { if (getBirdState(b.id).seen) seen++; });
+
       const pct = total ? Math.round((seen / total) * 100) : 0;
-      const bar = document.getElementById('progressBar');
-      bar.style.width = Math.max(4, pct) + '%';
-      bar.textContent = `${seen} of ${total} birds`;
+      const fill = document.getElementById('progressFill');
+      const text = document.getElementById('progressText');
+
+      fill.style.width = pct + '%';
+      text.textContent = `${seen} of ${total} Birds Found (${pct}%)`;
     }
 
-    function updateStats() {
+    async function shareProgress() {
       const total = birds.length;
-      let seen = 0, photos = 0;
-      birds.forEach(b => {
-        const s = getBirdState(b.id);
-        if (s.seen) seen++;
-        if (s.photo) photos++;
-      });
-      document.getElementById('statTotal').textContent = total;
-      document.getElementById('statSeen').textContent = seen;
-      document.getElementById('statPercent').textContent = total ? Math.round((seen/total)*100) + '%' : '0%';
-      document.getElementById('statWithPhoto').textContent = photos;
-    }
+      let seen = 0;
+      birds.forEach(b => { if (getBirdState(b.id).seen) seen++; });
 
-    function randomSpotlight() {
-      const b = birds[Math.floor(Math.random() * birds.length)];
-      document.getElementById('spotlightName').textContent = b.name;
-      document.getElementById('spotlightDesc').textContent = b.desc;
-      const img = document.getElementById('spotlightImg');
-      img.style.display = 'block';
-      img.src = b.img;
-      img.alt = b.name;
+      const message = `I've spotted ${seen} out of ${total} birds on my Barnsley Bird Checklist! 🐦🌳`;
+
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: 'My Birdwatching Progress',
+            text: message,
+            url: window.location.href
+          });
+        } catch (err) {
+          console.log('Share failed', err);
+        }
+      } else {
+        // Fallback to clipboard
+        navigator.clipboard.writeText(message);
+        alert('Progress copied to clipboard! You can now paste it into a message.');
+      }
     }
 
     /* ============================================
-       CONTROLS
+       CONTROLS & MODAL
        ============================================ */
+
+    function toggleModal(show) {
+      document.getElementById('settingsModal').style.display = show ? 'flex' : 'none';
+    }
 
     function toggleSeenOnly() {
       showOnlySeen = !showOnlySeen;
-      const btn = document.getElementById('seenToggle');
-      btn.textContent = showOnlySeen ? 'Show All Birds' : 'Show Only Seen';
-      btn.classList.toggle('btn-toggle', !showOnlySeen);
-      btn.classList.toggle('btn-primary', showOnlySeen);
+      document.getElementById('seenToggleBtn').textContent = showOnlySeen ? '👁️ Show All Birds' : '👁️ Show Only Seen Birds';
       render();
+      toggleModal(false);
     }
 
     function markAllUnseen() {
-      if (!confirm('Are you sure you want to mark every bird as not seen? This will not delete your photos or notes.')) return;
-      birds.forEach(b => {
-        const s = getBirdState(b.id);
-        if (s.seen) setBirdState(b.id, { seen: false });
-      });
+      if (!confirm('Start over? This will mark all birds as "Not Seen".')) return;
+      birds.forEach(b => setBirdState(b.id, { seen: false }));
       render();
+      toggleModal(false);
     }
 
     function toggleTheme() {
       const html = document.documentElement;
       const isDark = html.getAttribute('data-theme') === 'dark';
-      if (isDark) {
-        html.removeAttribute('data-theme');
-        localStorage.setItem('barnsleyTheme', 'light');
-        document.getElementById('themeBtn').textContent = '🌙 Dark Mode';
-      } else {
-        html.setAttribute('data-theme', 'dark');
-        localStorage.setItem('barnsleyTheme', 'dark');
-        document.getElementById('themeBtn').textContent = '☀️ Light Mode';
-      }
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      localStorage.setItem('barnsleyTheme', isDark ? 'light' : 'dark');
+      toggleModal(false);
     }
 
     function exportData() {
@@ -905,10 +553,8 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'barnsley-bird-checklist-backup.json';
-      document.body.appendChild(a);
+      a.download = 'my-bird-data.json';
       a.click();
-      document.body.removeChild(a);
       URL.revokeObjectURL(url);
     }
 
@@ -918,18 +564,14 @@
       const reader = new FileReader();
       reader.onload = function(e) {
         try {
-          const data = JSON.parse(e.target.result);
-          if (typeof data !== 'object') throw new Error('Bad file');
-          if (confirm('This will replace your current checklist. Continue?')) {
-            userData = data;
-            saveData();
-            render();
-            alert('Checklist imported successfully.');
-          }
+          userData = JSON.parse(e.target.result);
+          saveData();
+          render();
+          toggleModal(false);
+          alert('Data loaded successfully!');
         } catch (err) {
-          alert('Could not read that file. Make sure it is a valid JSON export.');
+          alert('Error loading file.');
         }
-        input.value = '';
       };
       reader.readAsText(file);
     }
@@ -943,17 +585,7 @@
     }
 
     window.addEventListener('scroll', function() {
-      document.getElementById('scrollTopBtn').style.display = (window.scrollY > 600) ? 'inline-flex' : 'none';
-    });
-
-    /* ============================================
-       KEYBOARD ACCESSIBILITY
-       ============================================ */
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        document.getElementById('searchInput').blur();
-      }
+      document.getElementById('scrollTopBtn').style.display = (window.scrollY > 400) ? 'flex' : 'none';
     });
 
     /* ============================================
@@ -963,13 +595,15 @@
     (function init() {
       loadData();
       const savedTheme = localStorage.getItem('barnsleyTheme');
-      if (savedTheme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        document.getElementById('themeBtn').textContent = '☀️ Light Mode';
-      }
+      if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
       render();
-      randomSpotlight();
+
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js')
+          .then(() => console.log('Service Worker Registered'))
+          .catch(err => console.log('Service Worker Failed', err));
+      }
     })();
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a02570ff3945ed02',t:'MTc3OTg4OTMzMQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>

@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#2d6a4f">
   <style>
     :root {
-      --bg: #f8faf8;
+      --bg: #f4f7f4;
       --card: #ffffff;
       --text: #1b2e22;
       --muted: #5c7161;
@@ -26,114 +26,121 @@
       --text: #f0f0f0;
       --muted: #b0b8b4;
       --border: #2d6a4f;
+      --shadow: rgba(0,0,0,0.3);
     }
 
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.6; }
+    body { 
+      margin: 0; 
+      background: var(--bg); 
+      color: var(--text); 
+      font-family: var(--font); 
+      line-height: 1.5; 
+      transition: background 0.3s;
+    }
 
     /* Header & Progress */
     header {
-      background: rgba(255,255,255,0.8); backdrop-filter: blur(10px);
-      padding: 16px; position: sticky; top: 0; z-index: 100;
-      border-bottom: 1px solid var(--border); text-align: center;
+      background: var(--card);
+      padding: 16px; 
+      position: sticky; 
+      top: 0; 
+      z-index: 100;
+      border-bottom: 1px solid var(--border); 
+      text-align: center;
+      box-shadow: 0 2px 10px var(--shadow);
     }
 
     .header-top { display: flex; justify-content: space-between; align-items: center; max-width: 600px; margin: 0 auto; }
-    h1 { margin: 0; font-size: 1.4rem; color: var(--accent); }
+    h1 { margin: 0; font-size: 1.4rem; color: var(--accent); display: flex; align-items: center; gap: 8px; }
 
     .progress-bar {
-      height: 12px; background: var(--accent-light); border-radius: 6px;
-      max-width: 600px; margin: 12px auto 4px; overflow: hidden;
+      height: 14px; background: var(--accent-light); border-radius: 100px;
+      max-width: 500px; margin: 12px auto 4px; overflow: hidden;
     }
-    .progress-fill { height: 100%; background: var(--accent); transition: width 0.5s ease; }
+    .progress-fill { height: 100%; background: var(--accent); transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
     .progress-text { font-size: 0.9rem; font-weight: 700; color: var(--muted); }
-
-    /* Main Actions */
-    .top-actions { max-width: 600px; margin: 16px auto; padding: 0 16px; display: flex; flex-direction: column; gap: 12px; }
-    .share-btn {
-      background: var(--accent); color: white; border: none; padding: 14px;
-      border-radius: 16px; font-weight: 700; font-size: 1.1rem; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-    }
 
     /* Filters */
     .filters {
-      padding: 8px 16px; display: flex; gap: 8px; max-width: 600px; margin: 0 auto;
-      position: sticky; top: 110px; background: var(--bg); z-index: 90;
+      padding: 12px 16px; background: var(--bg); 
+      position: sticky; top: 100px; z-index: 90;
+      border-bottom: 1px solid var(--border);
     }
-    .search-input { flex: 1; padding: 12px; border-radius: 12px; border: 2px solid var(--border); font-size: 1rem; }
-
-    /* Welcome Onboarding */
-    .onboarding {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000;
-      display: flex; align-items: center; justify-content: center; padding: 20px;
+    .search-input { 
+      width: 100%; max-width: 500px; display: block; margin: 0 auto;
+      padding: 14px 20px; border-radius: 16px; border: 2px solid var(--border); 
+      font-size: 1.1rem; font-family: inherit;
     }
-    .onboarding-card { background: white; padding: 32px; border-radius: 32px; text-align: center; max-width: 400px; }
-    .onboarding-card h2 { color: var(--accent); margin-top: 0; }
-    .onboarding-card button { background: var(--accent); color: white; border: none; padding: 16px 32px; border-radius: 16px; font-weight: 700; cursor: pointer; }
 
-    /* Bird Cards */
+    /* Action Bar */
+    .actions { padding: 16px; display: flex; justify-content: center; gap: 12px; }
+    .btn-share {
+      background: var(--accent); color: white; border: none; padding: 14px 24px;
+      border-radius: 16px; font-weight: 700; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(45,106,79,0.2);
+    }
+
+    /* Grid */
     main { padding: 16px; max-width: 1200px; margin: 0 auto; }
-    .birds-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+    .birds-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
 
+    /* Card Design */
     .bird-card {
       background: var(--card); border-radius: var(--radius); overflow: hidden;
       box-shadow: 0 8px 24px var(--shadow); border: 2px solid transparent;
-      display: flex; flex-direction: column; transition: transform 0.2s;
+      display: flex; flex-direction: column; transition: transform 0.2s, border-color 0.2s;
     }
     .bird-card.seen { border-color: var(--accent); }
 
-    .img-wrap { position: relative; height: 250px; background: #eee; }
+    .img-wrap { 
+      position: relative; height: 260px; background: #eee; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
     .bird-img { width: 100%; height: 100%; object-fit: cover; }
-    .img-loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: #eee; color: var(--muted); }
+    .img-error { padding: 20px; text-align: center; color: var(--muted); font-weight: 600; }
 
     .card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; text-align: center; }
-    .bird-name { font-size: 1.6rem; margin: 0 0 8px; color: var(--text); }
-    .bird-tip { font-style: italic; color: var(--muted); margin-bottom: 20px; font-size: 1rem; }
+    .bird-name { font-size: 1.5rem; margin: 0 0 4px; color: var(--text); }
+    .bird-tip { font-size: 0.95rem; color: var(--muted); margin-bottom: 20px; min-height: 3rem; }
 
     .spotted-btn {
-      margin-top: auto; padding: 16px; border-radius: 16px; border: 2px solid var(--accent-light);
+      margin-top: auto; padding: 18px; border-radius: 18px; border: 2px solid var(--accent-light);
       background: var(--accent-light); color: var(--accent); font-weight: 800;
       font-size: 1.2rem; cursor: pointer; transition: all 0.2s;
     }
     .spotted-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
 
-    /* Confetti */
-    .confetti { position: fixed; top: -10px; width: 10px; height: 10px; border-radius: 50%; z-index: 2000; pointer-events: none; animation: fall 3s linear forwards; }
-    @keyframes fall { to { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
+    .wiki-link { margin-top: 12px; font-size: 0.85rem; color: var(--muted); text-decoration: none; font-weight: 600; }
 
     /* Modal */
-    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: flex-end; justify-content: center; z-index: 1000; }
-    .modal-content { background: var(--card); width: 100%; max-width: 500px; padding: 24px; border-radius: 32px 32px 0 0; }
-    .modal-btn { width: 100%; padding: 16px; margin-bottom: 12px; border-radius: 16px; border: 1px solid var(--border); background: var(--card); font-weight: 600; cursor: pointer; }
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: flex-end; justify-content: center; z-index: 1000; padding: 10px; }
+    .modal-content { background: var(--card); width: 100%; max-width: 500px; padding: 24px; border-radius: 32px; margin-bottom: env(safe-area-inset-bottom, 20px); }
+    .modal-btn { width: 100%; padding: 18px; margin-bottom: 12px; border-radius: 18px; border: 1px solid var(--border); background: var(--card); font-weight: 700; cursor: pointer; font-size: 1rem; }
+
+    /* Confetti */
+    .confetti { position: fixed; top: -10px; width: 12px; height: 12px; border-radius: 2px; z-index: 2000; pointer-events: none; animation: fall 3s linear forwards; }
+    @keyframes fall { to { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
 
     .hidden { display: none !important; }
   </style>
 </head>
-<body>
-  <div id="onboarding" class="onboarding hidden">
-    <div class="onboarding-card">
-      <h2>Welcome, Mum! 🐦</h2>
-      <p>1. Look at the photos to find your bird.<br>2. Tap the big button when you spot one.<br>3. Share your progress with the family!</p>
-      <button onclick="closeOnboarding()">Let's Go!</button>
-    </div>
-  </div>
-
+<body onload="init()">
   <header>
     <div class="header-top">
-      <h1>Barnsley Birds</h1>
-      <button onclick="toggleModal(true)" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">⚙️</button>
+      <h1>🐦 Barnsley Birds</h1>
+      <button onclick="toggleModal(true)" style="background:none; border:none; font-size:1.6rem; cursor:pointer;">⚙️</button>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
-    <div class="progress-text" id="progressText">0 of 0 Birds Spotted</div>
+    <div class="progress-text" id="progressText">Checking your sightings...</div>
   </header>
 
-  <div class="top-actions">
-    <button class="share-btn" onclick="shareProgress()">📤 Share My Progress</button>
+  <div class="actions">
+    <button class="btn-share" onclick="shareProgress()">📤 Share My Progress</button>
   </div>
 
   <div class="filters">
-    <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search for a bird..." oninput="render()">
+    <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search by name..." oninput="render()">
   </div>
 
   <main>
@@ -142,43 +149,47 @@
 
   <div id="settingsModal" class="modal" onclick="if(event.target==this) toggleModal(false)">
     <div class="modal-content">
-      <h2 style="margin-top:0">Settings</h2>
-      <button class="modal-btn" onclick="toggleTheme()">🌓 Light / Dark Mode</button>
-      <button class="modal-btn" onclick="exportData()">📤 Backup My Data</button>
-      <button class="modal-btn" style="color:red" onclick="resetAll()">🗑️ Start Over (Reset)</button>
-      <button class="modal-btn" onclick="toggleModal(false)">Close</button>
+      <h2 style="margin-top:0; color:var(--accent)">Settings</h2>
+      <button class="modal-btn" onclick="toggleTheme()">🌓 Change Light/Dark Mode</button>
+      <button class="modal-btn" onclick="exportData()">📤 Save a Backup</button>
+      <button class="modal-btn" style="color:var(--danger); border-color:rgba(255,0,0,0.2)" onclick="resetAll()">🗑️ Reset Everything</button>
+      <button class="modal-btn" onclick="toggleModal(false)" style="background:var(--accent-light)">Close</button>
     </div>
   </div>
 
   <script>
+    // Using a high-performance image proxy (weserv.nl) to ensure images load fast and reliably
+    function getSafeImg(url) {
+      return `https://wsrv.nl/?url=${encodeURIComponent(url)}&w=600&h=600&fit=cover&q=80`;
+    }
+
     const birds = [
-      { id: 'robin', name: 'Robin', rarity: 'Common', tip: 'Red breast, friendly, often visits bird tables.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Erithacus_rubecula_%28Marek_Szczepanek%29.jpg/640px-Erithacus_rubecula_%28Marek_Szczepanek%29.jpg' },
-      { id: 'blackbird', name: 'Blackbird', rarity: 'Common', tip: 'Males are black with yellow beaks; females are brown.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Turdus_merula_-Great_Snoring%2C_Norfolk%2C_England-8.jpg/640px-Turdus_merula_-Great_Snoring%2C_Norfolk%2C_England-8.jpg' },
-      { id: 'woodpecker', name: 'Great Spotted Woodpecker', rarity: 'Uncommon', tip: 'Black and white with a red patch on the back of the head. Loves drumming on trees.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Dendrocopos_major_-01.jpg/640px-Dendrocopos_major_-01.jpg' },
-      { id: 'green_woodpecker', name: 'Green Woodpecker', rarity: 'Uncommon', tip: 'Large green bird with a red cap. Often seen on the ground eating ants.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Picus_viridis_-01.jpg/640px-Picus_viridis_-01.jpg' },
-      { id: 'bluetit', name: 'Blue Tit', rarity: 'Common', tip: 'Tiny blue cap, yellow breast, very active.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Eurasian_blue_tit_Lancashire.jpg/640px-Eurasian_blue_tit_Lancashire.jpg' },
-      { id: 'greattit', name: 'Great Tit', rarity: 'Common', tip: 'Black head with white cheeks and a black stripe down the breast.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Parus_major_-Great_Snoring%2C_Norfolk%2C_England-8.jpg/640px-Parus_major_-Great_Snoring%2C_Norfolk%2C_England-8.jpg' },
-      { id: 'woodpigeon', name: 'Woodpigeon', rarity: 'Common', tip: 'Large grey pigeon with a white patch on its neck.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Columba_palumbus_-garden_post-8a.jpg/640px-Columba_palumbus_-garden_post-8a.jpg' },
-      { id: 'goldfinch', name: 'Goldfinch', rarity: 'Common', tip: 'Bright red face and yellow patches on the wings.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Carduelis_carduelis_close_up.jpg/640px-Carduelis_carduelis_close_up.jpg' },
-      { id: 'bullfinch', name: 'Bullfinch', rarity: 'Uncommon', tip: 'Male has a bright pinkish-red breast and a black cap.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Pyrrhula_pyrrhula_-_01.jpg/640px-Pyrrhula_pyrrhula_-_01.jpg' },
-      { id: 'magpie', name: 'Magpie', rarity: 'Common', tip: 'Long tail, black and white with blue-green feathers.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Pica_pica_-_Compans_Caffarelli_-_2012-03-16.jpg/640px-Pica_pica_-_Compans_Caffarelli_-_2012-03-16.jpg' },
-      { id: 'starling', name: 'Starling', rarity: 'Common', tip: 'Glossy dark feathers with white spots in winter.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Sturnus_vulgaris_2_%28Marek_Szczepanek%29.jpg/640px-Sturnus_vulgaris_2_%28Marek_Szczepanek%29.jpg' },
-      { id: 'jay', name: 'Jay', rarity: 'Uncommon', tip: 'Pinkish-brown crow with a bright blue patch on the wing.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Garrulus_glandarius_1_%28Marek_Szczepanek%29.jpg/640px-Garrulus_glandarius_1_%28Marek_Szczepanek%29.jpg' },
-      { id: 'sparrowhawk', name: 'Sparrowhawk', rarity: 'Uncommon', tip: 'Small hawk, often visits gardens to hunt small birds.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Accipiter_nisus_-01.jpg/640px-Accipiter_nisus_-01.jpg' },
-      { id: 'wren', name: 'Wren', rarity: 'Common', tip: 'Tiny brown bird with a cocked-up tail and loud song.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Troglodytes_troglodytes_001.jpg/640px-Troglodytes_troglodytes_001.jpg' },
-      { id: 'housesparrow', name: 'House Sparrow', rarity: 'Common', tip: 'Small brown and grey bird, loves being near houses.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/House_Sparrow%2C_England.jpg/640px-House_Sparrow%2C_England.jpg' },
-      { id: 'kestrel', name: 'Kestrel', rarity: 'Uncommon', tip: 'Small hawk often seen hovering over fields or roadsides.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Falco_tinnunculus_-_01.jpg/640px-Falco_tinnunculus_-_01.jpg' },
-      { id: 'buzzard', name: 'Buzzard', rarity: 'Uncommon', tip: 'Large hawk with broad wings, often seen soaring in circles.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Buteo_buteo_-01.jpg/640px-Buteo_buteo_-01.jpg' }
+      { id: 'robin', name: 'European Robin', tip: 'Red breast, friendly, often visits bird tables.', img: 'https://upload.wikimedia.org/wikipedia/commons/f/f9/Erithacus_rubecula_%28Marek_Szczepanek%29.jpg' },
+      { id: 'blackbird', name: 'Common Blackbird', tip: 'Males are black with yellow beaks; females are brown.', img: 'https://upload.wikimedia.org/wikipedia/commons/9/9f/Turdus_merula_-Great_Snoring%2C_Norfolk%2C_England-8.jpg' },
+      { id: 'woodpecker', name: 'Great Spotted Woodpecker', tip: 'Black and white with a red patch on the head. Loves drumming!', img: 'https://upload.wikimedia.org/wikipedia/commons/0/0e/Dendrocopos_major_-01.jpg' },
+      { id: 'green_woodpecker', name: 'European Green Woodpecker', tip: 'Large green bird with a red cap. Often on lawns eating ants.', img: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Picus_viridis_-01.jpg' },
+      { id: 'bluetit', name: 'Eurasian Blue Tit', tip: 'Tiny blue cap, yellow breast, very active on feeders.', img: 'https://upload.wikimedia.org/wikipedia/commons/8/86/Eurasian_blue_tit_Lancashire.jpg' },
+      { id: 'greattit', name: 'Great Tit', tip: 'Black head with white cheeks and a black stripe down the breast.', img: 'https://upload.wikimedia.org/wikipedia/commons/4/4d/Parus_major_-Great_Snoring%2C_Norfolk%2C_England-8.jpg' },
+      { id: 'woodpigeon', name: 'Common Woodpigeon', tip: 'Large grey pigeon with a white patch on its neck.', img: 'https://upload.wikimedia.org/wikipedia/commons/1/14/Columba_palumbus_-garden_post-8a.jpg' },
+      { id: 'goldfinch', name: 'European Goldfinch', tip: 'Bright red face and yellow patches on the wings.', img: 'https://upload.wikimedia.org/wikipedia/commons/0/06/Carduelis_carduelis_close_up.jpg' },
+      { id: 'bullfinch', name: 'Eurasian Bullfinch', tip: 'Male has a bright pinkish-red breast and a black cap.', img: 'https://upload.wikimedia.org/wikipedia/commons/6/65/Pyrrhula_pyrrhula_-_01.jpg' },
+      { id: 'magpie', name: 'Eurasian Magpie', tip: 'Long tail, black and white with blue-green feathers.', img: 'https://upload.wikimedia.org/wikipedia/commons/4/45/Pica_pica_-_Compans_Caffarelli_-_2012-03-16.jpg' },
+      { id: 'starling', name: 'Common Starling', tip: 'Glossy dark feathers with white spots in winter.', img: 'https://upload.wikimedia.org/wikipedia/commons/0/0e/Sturnus_vulgaris_2_%28Marek_Szczepanek%29.jpg' },
+      { id: 'jay', name: 'Eurasian Jay', tip: 'Pinkish-brown crow with a bright blue patch on the wing.', img: 'https://upload.wikimedia.org/wikipedia/commons/f/f9/Garrulus_glandarius_1_%28Marek_Szczepanek%29.jpg' },
+      { id: 'sparrowhawk', name: 'Eurasian Sparrowhawk', tip: 'Small hawk, often visits gardens to hunt small birds.', img: 'https://upload.wikimedia.org/wikipedia/commons/9/9b/Accipiter_nisus_-01.jpg' },
+      { id: 'wren', name: 'Eurasian Wren', tip: 'Tiny brown bird with a cocked-up tail and loud song.', img: 'https://upload.wikimedia.org/wikipedia/commons/4/43/Troglodytes_troglodytes_001.jpg' },
+      { id: 'housesparrow', name: 'House Sparrow', tip: 'Small brown and grey bird, loves being near houses.', img: 'https://upload.wikimedia.org/wikipedia/commons/6/6d/House_Sparrow%2C_England.jpg' },
+      { id: 'kestrel', name: 'Common Kestrel', tip: 'Small hawk often seen hovering over fields or roads.', img: 'https://upload.wikimedia.org/wikipedia/commons/0/0c/Falco_tinnunculus_-_01.jpg' },
+      { id: 'buzzard', name: 'Common Buzzard', tip: 'Large hawk with broad wings, often seen soaring.', img: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Buteo_buteo_-01.jpg' },
+      { id: 'kingfisher', name: 'Common Kingfisher', tip: 'A flash of bright blue and orange near water.', img: 'https://upload.wikimedia.org/wikipedia/commons/c/cc/Alcedo_atthis_4_%28Lukasz_Lukasik%29.jpg' },
+      { id: 'barnowl', name: 'Barn Owl', tip: 'White heart-shaped face, silent ghost of the night.', img: 'https://upload.wikimedia.org/wikipedia/commons/c/c2/Tyto_alba_standing_on_the_ground.jpg' }
     ];
 
     let userData = {};
-    const STORAGE_KEY = 'barnsley_birds_v2';
+    const STORAGE_KEY = 'barnsley_birds_v3';
 
     function init() {
       loadData();
-      if (!localStorage.getItem('onboarded')) {
-        document.getElementById('onboarding').classList.remove('hidden');
-      }
       render();
       if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
     }
@@ -190,11 +201,6 @@
 
     function saveData() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
-    }
-
-    function closeOnboarding() {
-      localStorage.setItem('onboarded', 'true');
-      document.getElementById('onboarding').classList.add('hidden');
     }
 
     function render() {
@@ -209,10 +215,8 @@
         return `
           <article class="bird-card ${seen ? 'seen' : ''}">
             <div class="img-wrap" onclick="window.open('${wikiUrl}', '_blank')">
-              <div class="img-loading">Loading...</div>
-              <img src="${b.img}" class="bird-img" alt="${b.name}" 
-                onload="this.previousElementSibling.style.display='none'"
-                onerror="this.style.display='none'; this.previousElementSibling.innerHTML='🐦 No Photo Found';">
+              <img src="${getSafeImg(b.img)}" class="bird-img" alt="${b.name}" 
+                onerror="this.parentElement.innerHTML='<div class="img-error">🐦 Click to see photo on Wikipedia</div>'">
             </div>
             <div class="card-body">
               <h2 class="bird-name">${b.name}</h2>
@@ -220,7 +224,7 @@
               <button class="spotted-btn ${seen ? 'active' : ''}" onclick="event.stopPropagation(); toggleSeen('${b.id}')">
                 ${seen ? '✅ Spotted!' : '⬜ Not Seen Yet'}
               </button>
-              <a href="${wikiUrl}" target="_blank" style="margin-top:10px; font-size:0.8rem; color:var(--muted); text-decoration:none;">Learn more on Wikipedia ↗</a>
+              <a href="${wikiUrl}" target="_blank" class="wiki-link">More photos on Wikipedia ↗</a>
             </div>
           </article>
         `;
@@ -232,12 +236,10 @@
     function toggleSeen(id) {
       if (!userData[id]) userData[id] = { seen: false };
       userData[id].seen = !userData[id].seen;
-      
       if (userData[id].seen) {
-        if (navigator.vibrate) navigator.vibrate(50);
+        if (navigator.vibrate) navigator.vibrate(60);
         celebrate();
       }
-      
       saveData();
       render();
     }
@@ -246,7 +248,6 @@
       const total = birds.length;
       let seen = 0;
       birds.forEach(b => { if (userData[b.id]?.seen) seen++; });
-      
       const pct = (seen / total) * 100;
       document.getElementById('progressFill').style.width = pct + '%';
       document.getElementById('progressText').textContent = `${seen} of ${total} Birds Spotted (${Math.round(pct)}%)`;
@@ -259,11 +260,11 @@
         c.className = 'confetti';
         c.style.left = Math.random() * 100 + 'vw';
         c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        c.style.width = (Math.random() * 8 + 6) + 'px';
+        c.style.width = (Math.random() * 10 + 6) + 'px';
         c.style.height = c.style.width;
-        c.style.animationDelay = (Math.random() * 1) + 's';
+        c.style.animationDelay = (Math.random() * 1.5) + 's';
         document.body.appendChild(c);
-        setTimeout(() => c.remove(), 3000);
+        setTimeout(() => c.remove(), 4000);
       }
     }
 
@@ -272,10 +273,10 @@
       birds.forEach(b => { if (userData[b.id]?.seen) seen++; });
       const message = `I've spotted ${seen} birds on my Barnsley Bird Checklist! 🐦🌳`;
       if (navigator.share) {
-        await navigator.share({ title: 'My Birdwatching', text: message, url: window.location.href });
+        try { await navigator.share({ title: 'My Birdwatching', text: message, url: window.location.href }); } catch(e){}
       } else {
         navigator.clipboard.writeText(message);
-        alert('Copied to clipboard!');
+        alert('Progress copied to clipboard!');
       }
     }
 
@@ -283,11 +284,9 @@
     function toggleTheme() { document.body.dataset.theme = document.body.dataset.theme === 'dark' ? 'light' : 'dark'; toggleModal(false); }
     function exportData() {
       const blob = new Blob([JSON.stringify(userData)], { type: 'application/json' });
-      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'bird-data.json'; a.click();
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'bird-backup.json'; a.click();
     }
-    function resetAll() { if (confirm('Start over?')) { userData = {}; saveData(); render(); toggleModal(false); } }
-
-    init();
+    function resetAll() { if (confirm('Mark all birds as NOT SEEN?')) { userData = {}; saveData(); render(); toggleModal(false); } }
   </script>
 </body>
 </html>

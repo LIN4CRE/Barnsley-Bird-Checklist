@@ -154,22 +154,21 @@
     const birds = [
       { id: 'robin', name: 'Robin', rarity: 'Common', tip: 'Red breast, friendly, often visits bird tables.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Erithacus_rubecula_%28Marek_Szczepanek%29.jpg/640px-Erithacus_rubecula_%28Marek_Szczepanek%29.jpg' },
       { id: 'blackbird', name: 'Blackbird', rarity: 'Common', tip: 'Males are black with yellow beaks; females are brown.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Turdus_merula_-Great_Snoring%2C_Norfolk%2C_England-8.jpg/640px-Turdus_merula_-Great_Snoring%2C_Norfolk%2C_England-8.jpg' },
+      { id: 'woodpecker', name: 'Great Spotted Woodpecker', rarity: 'Uncommon', tip: 'Black and white with a red patch on the back of the head. Loves drumming on trees.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Dendrocopos_major_-01.jpg/640px-Dendrocopos_major_-01.jpg' },
+      { id: 'green_woodpecker', name: 'Green Woodpecker', rarity: 'Uncommon', tip: 'Large green bird with a red cap. Often seen on the ground eating ants.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Picus_viridis_-01.jpg/640px-Picus_viridis_-01.jpg' },
       { id: 'bluetit', name: 'Blue Tit', rarity: 'Common', tip: 'Tiny blue cap, yellow breast, very active.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Eurasian_blue_tit_Lancashire.jpg/640px-Eurasian_blue_tit_Lancashire.jpg' },
       { id: 'greattit', name: 'Great Tit', rarity: 'Common', tip: 'Black head with white cheeks and a black stripe down the breast.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Parus_major_-Great_Snoring%2C_Norfolk%2C_England-8.jpg/640px-Parus_major_-Great_Snoring%2C_Norfolk%2C_England-8.jpg' },
       { id: 'woodpigeon', name: 'Woodpigeon', rarity: 'Common', tip: 'Large grey pigeon with a white patch on its neck.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Columba_palumbus_-garden_post-8a.jpg/640px-Columba_palumbus_-garden_post-8a.jpg' },
       { id: 'goldfinch', name: 'Goldfinch', rarity: 'Common', tip: 'Bright red face and yellow patches on the wings.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Carduelis_carduelis_close_up.jpg/640px-Carduelis_carduelis_close_up.jpg' },
+      { id: 'bullfinch', name: 'Bullfinch', rarity: 'Uncommon', tip: 'Male has a bright pinkish-red breast and a black cap.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Pyrrhula_pyrrhula_-_01.jpg/640px-Pyrrhula_pyrrhula_-_01.jpg' },
       { id: 'magpie', name: 'Magpie', rarity: 'Common', tip: 'Long tail, black and white with blue-green feathers.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Pica_pica_-_Compans_Caffarelli_-_2012-03-16.jpg/640px-Pica_pica_-_Compans_Caffarelli_-_2012-03-16.jpg' },
       { id: 'starling', name: 'Starling', rarity: 'Common', tip: 'Glossy dark feathers with white spots in winter.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Sturnus_vulgaris_2_%28Marek_Szczepanek%29.jpg/640px-Sturnus_vulgaris_2_%28Marek_Szczepanek%29.jpg' },
-      { id: 'chaffinch', name: 'Chaffinch', rarity: 'Common', tip: 'Male has a pink breast and blue-grey cap.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Fringilla_coelebs_chaffinch_male_edit2.jpg/640px-Fringilla_coelebs_chaffinch_male_edit2.jpg' },
+      { id: 'jay', name: 'Jay', rarity: 'Uncommon', tip: 'Pinkish-brown crow with a bright blue patch on the wing.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Garrulus_glandarius_1_%28Marek_Szczepanek%29.jpg/640px-Garrulus_glandarius_1_%28Marek_Szczepanek%29.jpg' },
+      { id: 'sparrowhawk', name: 'Sparrowhawk', rarity: 'Uncommon', tip: 'Small hawk, often visits gardens to hunt small birds.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Accipiter_nisus_-01.jpg/640px-Accipiter_nisus_-01.jpg' },
       { id: 'wren', name: 'Wren', rarity: 'Common', tip: 'Tiny brown bird with a cocked-up tail and loud song.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Troglodytes_troglodytes_001.jpg/640px-Troglodytes_troglodytes_001.jpg' },
       { id: 'housesparrow', name: 'House Sparrow', rarity: 'Common', tip: 'Small brown and grey bird, loves being near houses.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/House_Sparrow%2C_England.jpg/640px-House_Sparrow%2C_England.jpg' },
-      { id: 'dunnock', name: 'Dunnock', rarity: 'Common', tip: 'Shy, hops near hedges, thin beak.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Prunella_modularis_-Gran_Canaria%2C_Spain-8.jpg/640px-Prunella_modularis_-Gran_Canaria%2C_Spain-8.jpg' },
-      { id: 'jackdaw', name: 'Jackdaw', rarity: 'Common', tip: 'Small grey-headed crow with bright eyes.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Corvus_monedula_-Hartwell_Nature_Reserve%2C_Buckinghamshire%2C_England-8.jpg/640px-Corvus_monedula_-Hartwell_Nature_Reserve%2C_Buckinghamshire%2C_England-8.jpg' },
-      { id: 'greylaggoose', name: 'Greylag Goose', rarity: 'Common', tip: 'Big grey goose with a bright orange beak.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Greylag_Goose_-_St_James%27s_Park%2C_London_-_Nov_2006.jpg/640px-Greylag_Goose_-_St_James%27s_Park%2C_London_-_Nov_2006.jpg' },
-      { id: 'mallard', name: 'Mallard', rarity: 'Common', tip: 'Male has a glossy green head and yellow beak.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Mallard2.jpg/640px-Mallard2.jpg' },
-      { id: 'nuthatch', name: 'Nuthatch', rarity: 'Uncommon', tip: 'Blue-grey bird that can walk down tree trunks head-first.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Sitta_europaea_-Estonia-8a.jpg/640px-Sitta_europaea_-Estonia-8a.jpg' },
-      { id: 'kingfisher', name: 'Kingfisher', rarity: 'Rare', tip: 'A flash of bright blue and orange near water.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Alcedo_atthis_4_%28Lukasz_Lukasik%29.jpg/640px-Alcedo_atthis_4_%28Lukasz_Lukasik%29.jpg' },
-      { id: 'barnowl', name: 'Barn Owl', rarity: 'Rare', tip: 'White heart-shaped face, silent ghost of the night.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Tyto_alba_standing_on_the_ground.jpg/640px-Tyto_alba_standing_on_the_ground.jpg' }
+      { id: 'kestrel', name: 'Kestrel', rarity: 'Uncommon', tip: 'Small hawk often seen hovering over fields or roadsides.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Falco_tinnunculus_-_01.jpg/640px-Falco_tinnunculus_-_01.jpg' },
+      { id: 'buzzard', name: 'Buzzard', rarity: 'Uncommon', tip: 'Large hawk with broad wings, often seen soaring in circles.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Buteo_buteo_-01.jpg/640px-Buteo_buteo_-01.jpg' }
     ];
 
     let userData = {};
@@ -206,18 +205,22 @@
       
       grid.innerHTML = filtered.map(b => {
         const seen = userData[b.id]?.seen;
+        const wikiUrl = `https://en.wikipedia.org/wiki/${b.name.replace(/ /g, '_')}`;
         return `
           <article class="bird-card ${seen ? 'seen' : ''}">
-            <div class="img-wrap">
+            <div class="img-wrap" onclick="window.open('${wikiUrl}', '_blank')">
               <div class="img-loading">Loading...</div>
-              <img src="${b.img}" class="bird-img" alt="${b.name}" onload="this.previousElementSibling.style.display='none'">
+              <img src="${b.img}" class="bird-img" alt="${b.name}" 
+                onload="this.previousElementSibling.style.display='none'"
+                onerror="this.style.display='none'; this.previousElementSibling.innerHTML='🐦 No Photo Found';">
             </div>
             <div class="card-body">
               <h2 class="bird-name">${b.name}</h2>
               <p class="bird-tip">${b.tip}</p>
-              <button class="spotted-btn ${seen ? 'active' : ''}" onclick="toggleSeen('${b.id}')">
+              <button class="spotted-btn ${seen ? 'active' : ''}" onclick="event.stopPropagation(); toggleSeen('${b.id}')">
                 ${seen ? '✅ Spotted!' : '⬜ Not Seen Yet'}
               </button>
+              <a href="${wikiUrl}" target="_blank" style="margin-top:10px; font-size:0.8rem; color:var(--muted); text-decoration:none;">Learn more on Wikipedia ↗</a>
             </div>
           </article>
         `;

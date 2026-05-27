@@ -1,10 +1,10 @@
 {
   "name": "Barnsley Bird Checklist",
-  "short_name": "Bird Watch",
-  "description": "A simple birdwatching checklist for Barnsley and South Yorkshire.",
-  "start_url": "./index.html",
+  "short_name": "Barnsley Birds",
+  "description": "A simple and beautiful birdwatching checklist for Barnsley and South Yorkshire.",
+  "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#fdfefd",
+  "background_color": "#f7f9f7",
   "theme_color": "#2d6a4f",
   "icons": [
     {

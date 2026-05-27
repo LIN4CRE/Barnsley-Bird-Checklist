@@ -1,7 +1,8 @@
-const CACHE_NAME = 'barnsley-birds-v2';
+const CACHE_NAME = 'barnsley-birds-v3';
 const ASSETS = [
   'index.html',
-  'manifest.json'
+  'manifest.json',
+  'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js'
 ];
 
 self.addEventListener('install', (event) => {
